@@ -42,7 +42,25 @@ get:
 
   responses:
     "200":
-      description: The search results
+      description: A collection of hubs containing search results relevant to the query
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              MediaContainer:
+                allOf:
+                  - $ref: "../../models/media-container/size.yaml"
+                  - type: object
+                    properties:
+                      Hub:
+                        type: array
+                        description: |
+                          A collection of items, logically grouped by their content type.
+                          `Directory` and `Metadata` are mutually exclusive or nullable, (if `size` is 0, neither will be present).
+                        items:
+                          $ref: "../../models/hub/Hub.yaml"
+                    additionalProperties: true
     "400":
       $ref: "../../responses/400.yaml"
     "401":
